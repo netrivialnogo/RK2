@@ -1,4 +1,8 @@
 #include "BusinessMediator.h"
+#include "EstateOwner.h"
+#include "GroceryStore.h"
+#include "Restaurant.h"
+
 
 BusinessMediator::BusinessMediator(EstateOwner& estateOwner, GroceryStore& groceryStore, Restaurant& restaurant)
     : estateOwner_(estateOwner), groceryStore_(groceryStore), restaurant_(restaurant)
