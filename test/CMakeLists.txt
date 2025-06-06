@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
-enable_testing()More actions
+enable_testing()
+
 
 find_package(GTest REQUIRED)
 
