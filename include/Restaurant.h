@@ -3,7 +3,6 @@
 
 #include <cstdint>
 #include "AccessKey.h"
-#include "BusinessMediator.h"
 
 class BusinessMediator;
 
@@ -20,4 +19,4 @@ private:
     std::int32_t price_{ 500 };
 };
 
-#endif 
+#endif
