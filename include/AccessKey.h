@@ -10,13 +10,12 @@ private:
     friend T;
     
 public:
+    bool operator==(const AccessKey&) const { return true; }
     static constexpr AccessKey createForTesting() {
-        struct TestKey : AccessKey {
-            constexpr TestKey() : AccessKey() {}
-        };
-        return TestKey();
+        return {};
     }
 };
 
 }
+
 #endif 
