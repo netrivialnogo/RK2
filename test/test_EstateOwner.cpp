@@ -5,11 +5,18 @@
 
 using ::testing::_;
 
+namespace {
+    template<typename T>
+    design::AccessKey<T> MakeAccessKey() {
+        return {};
+    }
+}
+
 class MockBusinessMediator : public BusinessMediator {
 public:
     MockBusinessMediator() : BusinessMediator(*(EstateOwner*)nullptr, *(GroceryStore*)nullptr, *(Restaurant*)nullptr) {}
     
-    MOCK_METHOD(void, EstateRentPriceChanged, (std::int32_t, std::int32_t), (override));
+    MOCK_METHOD(void, EstateRentPriceChanged, (int32_t, int32_t), (override));
 };
 
 TEST(EstateOwnerTest, SetEstateRentPrice) {
@@ -22,9 +29,10 @@ TEST(EstateOwnerTest, MediatorNotification) {
     EstateOwner owner;
     MockBusinessMediator mediator;
     
-    owner.SetBusinessMediator(design::AccessKey<BusinessMediator>(), &mediator);
-    
+
+    owner.SetBusinessMediator(MakeAccessKey<BusinessMediator>(), &mediator);
+
     EXPECT_CALL(mediator, EstateRentPriceChanged(10000, 15000)).Times(1);
-    
+
     owner.SetEstateRentPrice(15000);
 }
