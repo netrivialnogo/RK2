@@ -21,22 +21,7 @@ jobs:
           cmake \
           libgtest-dev \
           libgmock-dev \
-          googletest \
-          google-mock
-
-    - name: Build and install GTest/GMock
-      run: |
-        # Build and install GTest
-        cd /usr/src/googletest
-        sudo cmake CMakeLists.txt
-        sudo make
-        sudo make install
-        
-        # Build and install GMock
-        cd /usr/src/gmock
-        sudo cmake CMakeLists.txt
-        sudo make
-        sudo make install
+          googletest
 
     - name: Configure and build
       run: |
