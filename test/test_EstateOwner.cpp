@@ -7,9 +7,10 @@ using ::testing::_;
 
 class MockBusinessMediator : public BusinessMediator {
 public:
-    MockBusinessMediator() : BusinessMediator(*(EstateOwner*)nullptr, *(GroceryStore*)nullptr, *(Restaurant*)nullptr) {}
+    MockBusinessMediator(EstateOwner& e, GroceryStore& g, Restaurant& r)
+        : BusinessMediator(e, g, r) {}
     
-    MOCK_METHOD(void, EstateRentPriceChanged, (std::int32_t, std::int32_t), (override));
+    MOCK_METHOD(void, EstateRentPriceChanged, (int32_t, int32_t), (override));
 };
 
 TEST(EstateOwnerTest, SetEstateRentPrice) {
@@ -20,9 +21,11 @@ TEST(EstateOwnerTest, SetEstateRentPrice) {
 
 TEST(EstateOwnerTest, MediatorNotification) {
     EstateOwner owner;
-    MockBusinessMediator mediator;
+    GroceryStore grocery;
+    Restaurant restaurant;
+    MockBusinessMediator mediator(owner, grocery, restaurant);
     
-    owner.SetBusinessMediator(design::TestAccess<BusinessMediator>::create(), &mediator);
+    owner.SetBusinessMediator(design::AccessKey<BusinessMediator>{}, &mediator);
     
     EXPECT_CALL(mediator, EstateRentPriceChanged(10000, 15000)).Times(1);
     owner.SetEstateRentPrice(15000);
