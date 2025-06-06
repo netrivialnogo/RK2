@@ -12,8 +12,8 @@ public:
     MockBusinessMediator(EstateOwner& e, GroceryStore& g, Restaurant& r)
         : BusinessMediator(e, g, r) {}
     
-    MOCK_METHOD(void, GroceryStockChanged, (int32_t), (override));
-    MOCK_METHOD(void, GroceryPriceChanged, (int32_t, int32_t), (override));
+    MOCK_METHOD(void, GroceryStockChanged, (std::int32_t), (override));
+    MOCK_METHOD(void, GroceryPriceChanged, (std::int32_t, std::int32_t), (override));
 };
 
 TEST(GroceryStoreTest, Supply) {
