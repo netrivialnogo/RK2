@@ -1,6 +1,7 @@
 #ifndef BUSINESSMEDIATOR_H
 #define BUSINESSMEDIATOR_H
 
+#include <cstdint>  
 
 class EstateOwner;
 class GroceryStore;
