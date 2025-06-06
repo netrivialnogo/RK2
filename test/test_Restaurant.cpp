@@ -2,6 +2,8 @@
 #include <gmock/gmock.h>
 #include "../include/Restaurant.h"
 #include "../include/BusinessMediator.h"
+#include "../include/EstateOwner.h"
+#include "../include/GroceryStore.h"
 
 using ::testing::_;
 
@@ -15,7 +17,6 @@ public:
 
 TEST(RestaurantTest, SetIsOpened) {
     Restaurant restaurant;
-
     restaurant.SetIsOpened(design::AccessKey<BusinessMediator>::createForTesting(), false);
     restaurant.SetIsOpened(design::AccessKey<BusinessMediator>::createForTesting(), true);
 }
