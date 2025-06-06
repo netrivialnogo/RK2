@@ -3,11 +3,14 @@
 #include "../include/GroceryStore.h"
 #include "../include/BusinessMediator.h"
 
-class MockMediator : public BusinessMediator {
+using ::testing::_;
+
+class MockBusinessMediator : public BusinessMediator {
 public:
-    MockMediator() : BusinessMediator(*(EstateOwner*)nullptr, *(GroceryStore*)nullptr, *(Restaurant*)nullptr) {}
-    MOCK_METHOD(void, GroceryStockChanged, (std::int32_t currentStock), (override));
-    MOCK_METHOD(void, GroceryPriceChanged, (std::int32_t oldPrice, std::int32_t newPrice), (override));
+    MockBusinessMediator() : BusinessMediator(*(EstateOwner*)nullptr, *(GroceryStore*)nullptr, *(Restaurant*)nullptr) {}
+    
+    MOCK_METHOD(void, GroceryStockChanged, (std::int32_t), (override));
+    MOCK_METHOD(void, GroceryPriceChanged, (std::int32_t, std::int32_t), (override));
 };
 
 TEST(GroceryStoreTest, Supply) {
@@ -32,7 +35,7 @@ TEST(GroceryStoreTest, AlterPrice) {
 
 TEST(GroceryStoreTest, MediatorNotifications) {
     GroceryStore store;
-    MockMediator mediator;
+    MockBusinessMediator mediator;
     
     store.SetBusinessMediator(design::AccessKey<BusinessMediator>(), &mediator);
     
