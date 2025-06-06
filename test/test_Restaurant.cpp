@@ -3,9 +3,12 @@
 #include "../include/Restaurant.h"
 #include "../include/BusinessMediator.h"
 
-class MockMediator : public BusinessMediator {
+using ::testing::_;
+
+class MockBusinessMediator : public BusinessMediator {
 public:
-    MockMediator() : BusinessMediator(*(EstateOwner*)nullptr, *(GroceryStore*)nullptr, *(Restaurant*)nullptr) {}
+    MockBusinessMediator() : BusinessMediator(*(EstateOwner*)nullptr, *(GroceryStore*)nullptr, *(Restaurant*)nullptr) {}
+    
     MOCK_METHOD(void, FoodIsCooked, (), (override));
 };
 
@@ -30,7 +33,7 @@ TEST(RestaurantTest, SetIsOpened) {
 
 TEST(RestaurantTest, MediatorNotification) {
     Restaurant restaurant;
-    MockMediator mediator;
+    MockBusinessMediator mediator;
     
     restaurant.SetBusinessMediator(design::AccessKey<BusinessMediator>(), &mediator);
     
