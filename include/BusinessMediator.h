@@ -9,17 +9,11 @@ class Restaurant;
 
 class BusinessMediator {
 public:
-    BusinessMediator(EstateOwner& estateOwner, GroceryStore& groceryStore, Restaurant& restaurant);
-
-    void EstateRentPriceChanged(std::int32_t oldPrice, std::int32_t newPrice);
-    void GroceryStockChanged(std::int32_t currentStock);
-    void GroceryPriceChanged(std::int32_t oldPrice, std::int32_t newPrice);
-    void FoodIsCooked();
-
-private:
-    EstateOwner& estateOwner_;
-    GroceryStore& groceryStore_;
-    Restaurant& restaurant_;
+    virtual ~BusinessMediator() = default;
+    virtual void EstateRentPriceChanged(std::int32_t oldPrice, std::int32_t newPrice) = 0;
+    virtual void GroceryStockChanged(std::int32_t currentStock) = 0;
+    virtual void GroceryPriceChanged(std::int32_t oldPrice, std::int32_t newPrice) = 0;
+    virtual void FoodIsCooked() = 0;
 };
 
 #endif 
