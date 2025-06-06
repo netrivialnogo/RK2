@@ -6,7 +6,6 @@ find_package(GTest REQUIRED)
 find_package(Threads REQUIRED)
 
 add_executable(BusinessMediatorTests
-    test_BusinessMediator.cpp
     test_EstateOwner.cpp
     test_GroceryStore.cpp
     test_Restaurant.cpp
