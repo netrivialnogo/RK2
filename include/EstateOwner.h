@@ -1,9 +1,8 @@
 #ifndef ESTATEOWNER_H
 #define ESTATEOWNER_H
 
-#include <cstdint>
+#include <cstdint>  
 #include "AccessKey.h"
-
 
 class BusinessMediator;
 
