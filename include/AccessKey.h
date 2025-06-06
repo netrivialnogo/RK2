@@ -10,9 +10,13 @@ private:
     friend T;
     
 public:
-    static constexpr AccessKey create() { return {}; }
+    static constexpr AccessKey createForTesting() {
+        struct TestKey : AccessKey {
+            constexpr TestKey() : AccessKey() {}
+        };
+        return TestKey();
+    }
 };
 
 }
-
 #endif 
