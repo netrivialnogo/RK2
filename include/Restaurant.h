@@ -1,7 +1,7 @@
 #ifndef RESTAURANT_H
 #define RESTAURANT_H
 
-#include <cstdint>
+#include <cstdint> 
 #include "AccessKey.h"
 
 class BusinessMediator;
@@ -19,4 +19,4 @@ private:
     std::int32_t price_{ 500 };
 };
 
-#endif
+#endif 
