@@ -5,12 +5,13 @@ enable_testing()
 
 
 find_package(GTest REQUIRED)
-find_package(Threads REQUIRED)
+find_package(GMock REQUIRED)
 
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/include
     ${GTEST_INCLUDE_DIRS}
+    ${GMOCK_INCLUDE_DIRS}
 )
 
 
@@ -24,8 +25,8 @@ add_executable(BusinessMediatorTests
 target_link_libraries(BusinessMediatorTests
     BusinessMediatorLib
     GTest::GTest
-    GTest::Main
-    Threads::Threads
+    GMock::GMock
+    ${CMAKE_THREAD_LIBS_INIT}
 )
 
 
