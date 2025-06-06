@@ -35,7 +35,11 @@ jobs:
       run: |
         mkdir -p package/usr/bin
         cp build/BusinessMediatorDemo package/usr/bin/
-        find build/test -maxdepth 1 -type f -executable -exec cp {} package/usr/bin/ \;
+        
+        # Копируем все тестовые исполняемые файлы из build/test/
+        if [ -d build/test ]; then
+          find build/test -maxdepth 1 -type f -executable -exec cp {} package/usr/bin/ \;
+        fi
         
         mkdir -p package/DEBIAN
         cat <<EOF > package/DEBIAN/control
@@ -47,11 +51,10 @@ jobs:
         Maintainer: netrivialnogo <kbelovwowcirkle@gmail.com>
         Description: Business Mediator Pattern Implementation
         EOF
-        
         dpkg-deb --build package business-mediator.deb
-
+        
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: business-mediator-package
-        path: build/business-mediator.deb
+        path: business-mediator.deb
