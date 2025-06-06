@@ -1,9 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
 
-enable_testing()
+enable_testing()More actions
 
 find_package(GTest REQUIRED)
-find_package(Threads REQUIRED)
+
+include_directories(
+    ${CMAKE_SOURCE_DIR}/include
+)
 
 add_executable(BusinessMediatorTests
     test_EstateOwner.cpp
@@ -12,17 +15,12 @@ add_executable(BusinessMediatorTests
 )
 
 target_link_libraries(BusinessMediatorTests
-    PRIVATE
-    GTest::GTest
-    GTest::Main
-    Threads::Threads
     BusinessMediatorLib
+    GTest::gtest
+    GTest::gtest_main
+    GTest::gmock
+    GTest::gmock_main
+    ${CMAKE_THREAD_LIBS_INIT}
 )
 
-target_include_directories(BusinessMediatorTests
-    PRIVATE ${CMAKE_SOURCE_DIR}/include
-)
-
-
-add_test(NAME BusinessMediatorTests
-         COMMAND BusinessMediatorTests)
+add_test(NAME BusinessMediatorTests COMMAND BusinessMediatorTests)
