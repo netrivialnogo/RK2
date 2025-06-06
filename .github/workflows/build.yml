@@ -1,0 +1,52 @@
+name: Build and Package
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake libgtest-dev
+
+    - name: Build and test
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        make
+        ctest --output-on-failure
+
+    - name: Create DEB package
+      run: |
+        mkdir -p package/usr/bin
+        cp build/BusinessMediatorDemo package/usr/bin/
+        cp -r build/test package/usr/bin/
+        
+        mkdir -p package/DEBIAN
+        echo "Package: business-mediator" > package/DEBIAN/control
+        echo "Version: 1.0" >> package/DEBIAN/control
+        echo "Section: base" >> package/DEBIAN/control
+        echo "Priority: optional" >> package/DEBIAN/control
+        echo "Architecture: amd64" >> package/DEBIAN/control
+        echo "Maintainer: Your Name <your.email@example.com>" >> package/DEBIAN/control
+        echo "Description: Business Mediator Pattern Implementation" >> package/DEBIAN/control
+        
+        dpkg-deb --build package business-mediator.deb
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: business-mediator-package
+        path: build/business-mediator.deb
+
+
