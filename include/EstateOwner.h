@@ -3,7 +3,7 @@
 
 #include <cstdint>
 #include "AccessKey.h"
-#include "BusinessMediator.h"
+
 
 class BusinessMediator;
 
@@ -17,4 +17,4 @@ private:
     std::int32_t estateRentPrice_{ 10000 };
 };
 
-#endif 
+#endif
