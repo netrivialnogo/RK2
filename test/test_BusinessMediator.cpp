@@ -7,29 +7,35 @@
 
 using namespace testing;
 
+class EstateOwner;
+class GroceryStore;
+class Restaurant;
+
 class MockEstateOwner : public EstateOwner {
 public:
-    MOCK_METHOD(std::int32_t, SetEstateRentPrice, (std::int32_t), (override));
+    MOCK_METHOD(std::int32_t, SetEstateRentPrice, (std::int32_t price), (override));
     MOCK_METHOD(BusinessMediator*, SetBusinessMediator, 
-               (design::AccessKey<BusinessMediator>, BusinessMediator*), (override));
+               (design::AccessKey<BusinessMediator> key, BusinessMediator* mediator), (override));
 };
 
 class MockGroceryStore : public GroceryStore {
 public:
-    MOCK_METHOD(std::int32_t, Supply, (std::uint16_t), (override));
+    MOCK_METHOD(std::int32_t, Supply, (std::uint16_t count), (override));
     MOCK_METHOD(std::int32_t, Sell, (), (override));
-    MOCK_METHOD(std::int32_t, AlterPrice, (std::int32_t), (override));
+    MOCK_METHOD(std::int32_t, AlterPrice, (std::int32_t priceChange), (override));
     MOCK_METHOD(BusinessMediator*, SetBusinessMediator,
-               (design::AccessKey<BusinessMediator>, BusinessMediator*), (override));
+               (design::AccessKey<BusinessMediator> key, BusinessMediator* mediator), (override));
 };
 
 class MockRestaurant : public Restaurant {
 public:
+    // Match exact base class signatures
     MOCK_METHOD(std::int32_t, CookFood, (), (override));
-    MOCK_METHOD(std::int32_t, AlterPrice, (std::int32_t), (override));
-    MOCK_METHOD(void, SetIsOpened, (design::AccessKey<BusinessMediator>, bool), (override));
+    MOCK_METHOD(std::int32_t, AlterPrice, (std::int32_t priceChange), (override));
+    MOCK_METHOD(void, SetIsOpened, 
+               (design::AccessKey<BusinessMediator> key, bool isOpened), (override));
     MOCK_METHOD(BusinessMediator*, SetBusinessMediator,
-               (design::AccessKey<BusinessMediator>, BusinessMediator*), (override));
+               (design::AccessKey<BusinessMediator> key, BusinessMediator* mediator), (override));
 };
 
 TEST(BusinessMediatorTest, EstateRentPriceChanged) {
@@ -38,9 +44,9 @@ TEST(BusinessMediatorTest, EstateRentPriceChanged) {
     MockRestaurant restaurant;
     BusinessMediator mediator(owner, grocery, restaurant);
 
+
     EXPECT_CALL(grocery, AlterPrice(0)).WillOnce(Return(100));
     EXPECT_CALL(restaurant, AlterPrice(0)).WillOnce(Return(500));
-    
 
     mediator.EstateRentPriceChanged(10000, 10000);
 }
@@ -50,9 +56,15 @@ TEST(BusinessMediatorTest, GroceryStockChanged) {
     MockGroceryStore grocery;
     MockRestaurant restaurant;
     BusinessMediator mediator(owner, grocery, restaurant);
+
+
     auto testKey = design::AccessKey<BusinessMediator>::createForTesting();
+
+
     EXPECT_CALL(restaurant, SetIsOpened(testKey, true)).Times(1);
     mediator.GroceryStockChanged(5);
+
+
     EXPECT_CALL(restaurant, SetIsOpened(testKey, false)).Times(1);
     mediator.GroceryStockChanged(0);
 }
