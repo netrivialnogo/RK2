@@ -16,7 +16,6 @@ public:
 
 class MockGroceryStore : public GroceryStore {
 public:
-
     MOCK_METHOD(std::int32_t, Supply, (std::uint16_t), (override));
     MOCK_METHOD(std::int32_t, Sell, (), (override));
     MOCK_METHOD(std::int32_t, AlterPrice, (std::int32_t), (override));
@@ -26,11 +25,9 @@ public:
 
 class MockRestaurant : public Restaurant {
 public:
-
     MOCK_METHOD(std::int32_t, CookFood, (), (override));
     MOCK_METHOD(std::int32_t, AlterPrice, (std::int32_t), (override));
-    MOCK_METHOD(void, SetIsOpened, 
-               (design::AccessKey<BusinessMediator>, bool), (override));
+    MOCK_METHOD(void, SetIsOpened, (design::AccessKey<BusinessMediator>, bool), (override));
     MOCK_METHOD(BusinessMediator*, SetBusinessMediator,
                (design::AccessKey<BusinessMediator>, BusinessMediator*), (override));
 };
@@ -41,8 +38,8 @@ TEST(BusinessMediatorTest, EstateRentPriceChanged) {
     MockRestaurant restaurant;
     BusinessMediator mediator(owner, grocery, restaurant);
 
-    EXPECT_CALL(grocery, AlterPrice).WillOnce(Return(100));
-    EXPECT_CALL(restaurant, AlterPrice).WillOnce(Return(500));
+    EXPECT_CALL(grocery, AlterPrice(_)).WillOnce(Return(100));
+    EXPECT_CALL(restaurant, AlterPrice(_)).WillOnce(Return(500));
     
     mediator.EstateRentPriceChanged(10000, 10000);
 }
@@ -67,7 +64,7 @@ TEST(BusinessMediatorTest, GroceryPriceChanged) {
     MockRestaurant restaurant;
     BusinessMediator mediator(owner, grocery, restaurant);
 
-    EXPECT_CALL(restaurant, AlterPrice).WillOnce(Return(550));
+    EXPECT_CALL(restaurant, AlterPrice(_)).WillOnce(Return(550));
     mediator.GroceryPriceChanged(100, 150);
 }
 
@@ -77,6 +74,6 @@ TEST(BusinessMediatorTest, FoodIsCooked) {
     MockRestaurant restaurant;
     BusinessMediator mediator(owner, grocery, restaurant);
 
-    EXPECT_CALL(grocery, Sell).WillOnce(Return(100));
+    EXPECT_CALL(grocery, Sell()).WillOnce(Return(100));
     mediator.FoodIsCooked();
 }
