@@ -5,16 +5,6 @@
 
 using ::testing::_;
 
-namespace {
-    template<typename T>
-    design::AccessKey<T> MakeTestAccessKey() {
-        struct TestKey : design::AccessKey<T> {
-            TestKey() : design::AccessKey<T>() {}
-        };
-        return TestKey();
-    }
-}
-
 class MockBusinessMediator : public BusinessMediator {
 public:
     MockBusinessMediator() : BusinessMediator(*(EstateOwner*)nullptr, *(GroceryStore*)nullptr, *(Restaurant*)nullptr) {}
@@ -32,7 +22,7 @@ TEST(EstateOwnerTest, MediatorNotification) {
     EstateOwner owner;
     MockBusinessMediator mediator;
     
-    owner.SetBusinessMediator(MakeTestAccessKey<BusinessMediator>(), &mediator);
+    owner.SetBusinessMediator(design::TestAccess<BusinessMediator>::create(), &mediator);
     
     EXPECT_CALL(mediator, EstateRentPriceChanged(10000, 15000)).Times(1);
     owner.SetEstateRentPrice(15000);
