@@ -1,11 +1,15 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 #include "../include/EstateOwner.h"
 #include "../include/BusinessMediator.h"
 
-class MockMediator : public BusinessMediator {
+using ::testing::_;
+
+class MockBusinessMediator : public BusinessMediator {
 public:
-    MockMediator() : BusinessMediator(*(EstateOwner*)nullptr, *(GroceryStore*)nullptr, *(Restaurant*)nullptr) {}
-    MOCK_METHOD(void, EstateRentPriceChanged, (std::int32_t oldPrice, std::int32_t newPrice), (override));
+    MockBusinessMediator() : BusinessMediator(*(EstateOwner*)nullptr, *(GroceryStore*)nullptr, *(Restaurant*)nullptr) {}
+    
+    MOCK_METHOD(void, EstateRentPriceChanged, (std::int32_t, std::int32_t), (override));
 };
 
 TEST(EstateOwnerTest, SetEstateRentPrice) {
@@ -16,10 +20,11 @@ TEST(EstateOwnerTest, SetEstateRentPrice) {
 
 TEST(EstateOwnerTest, MediatorNotification) {
     EstateOwner owner;
-    MockMediator mediator;
+    MockBusinessMediator mediator;
     
     owner.SetBusinessMediator(design::AccessKey<BusinessMediator>(), &mediator);
     
     EXPECT_CALL(mediator, EstateRentPriceChanged(10000, 15000)).Times(1);
+    
     owner.SetEstateRentPrice(15000);
 }
