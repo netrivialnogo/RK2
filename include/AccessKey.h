@@ -6,18 +6,13 @@ namespace design {
 template <typename T>
 class AccessKey {
 private:
-    AccessKey() = default;
+    constexpr AccessKey() = default;
     friend T;
     
-    template <typename TestFriend>
-    friend struct TestAccess;
+public:
+    static constexpr AccessKey create() { return {}; }
 };
 
-template <typename T>
-struct TestAccess {
-    static AccessKey<T> create() { return {}; }
-};
-
-} 
+}
 
 #endif 
