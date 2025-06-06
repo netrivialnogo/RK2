@@ -1,9 +1,10 @@
 #ifndef BUSINESSMEDIATOR_H
 #define BUSINESSMEDIATOR_H
 
-#include "EstateOwner.h"
-#include "GroceryStore.h"
-#include "Restaurant.h"
+
+class EstateOwner;
+class GroceryStore;
+class Restaurant;
 
 class BusinessMediator {
 public:
