@@ -13,7 +13,7 @@ TEST(EstateOwnerTest, SetEstateRentPrice_NotifiesMediator) {
     
     owner.SetBusinessMediator(design::AccessKey<BusinessMediator>::createForTesting(), &mediator);
 
-    EXPECT_CALL(mediator, EstateRentPriceChanged(0, 1000)).Times(1);
+    EXPECT_CALL(mediator, EstateRentPriceChanged(10000, 1000)).Times(1);
     owner.SetEstateRentPrice(1000);
 }
 
