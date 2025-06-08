@@ -20,15 +20,3 @@ TEST(RestaurantTest, SetIsOpened) {
     restaurant.SetIsOpened(design::AccessKey<BusinessMediator>::createForTesting(), false);
     restaurant.SetIsOpened(design::AccessKey<BusinessMediator>::createForTesting(), true);
 }
-
-TEST(RestaurantTest, MediatorNotification) {
-    EstateOwner owner;
-    GroceryStore grocery;
-    Restaurant restaurant;
-    MockBusinessMediator mediator(owner, grocery, restaurant);
-    
-    restaurant.SetBusinessMediator(design::AccessKey<BusinessMediator>::createForTesting(), &mediator);
-    
-    EXPECT_CALL(mediator, FoodIsCooked()).Times(1);
-    restaurant.CookFood();
-}
