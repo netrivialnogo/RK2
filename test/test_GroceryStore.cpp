@@ -7,18 +7,31 @@
 
 using ::testing::_;
 
-class MockBusinessMediator : public BusinessMediator {
-public:
-    MockBusinessMediator(EstateOwner& e, GroceryStore& g, Restaurant& r)
-        : BusinessMediator(e, g, r) {}
-    
-    MOCK_METHOD(void, GroceryStockChanged, (std::int32_t), (override));
-    MOCK_METHOD(void, GroceryPriceChanged, (std::int32_t, std::int32_t), (override));
-};
-
-TEST(GroceryStoreTest, Supply) {
+TEST(GroceryStoreTest, Supply_IncreasesStockAndNotifies) {
     GroceryStore store;
-    EXPECT_EQ(store.Supply(5), 5);
+    MockBusinessMediator mediator;
+    store.SetBusinessMediator(design::AccessKey<BusinessMediator>::createForTesting(), &mediator);
+
+    EXPECT_CALL(mediator, GroceryStockChanged(10)).Times(1);
+    auto newStock = store.Supply(10);
+    EXPECT_EQ(newStock, 10);
+}
+
+TEST(GroceryStoreTest, Sell_DecreasesStockAndNotifies) {
+    GroceryStore store;
+    store.Supply(5);  
+    
+    MockBusinessMediator mediator;
+    store.SetBusinessMediator(design::AccessKey<BusinessMediator>::createForTesting(), &mediator);
+
+    EXPECT_CALL(mediator, GroceryStockChanged(4)).Times(1);
+    auto price = store.Sell();
+    EXPECT_GT(price, 0);
+}
+
+TEST(GroceryStoreTest, Sell_ThrowsWhenEmpty) {
+    GroceryStore store;
+    EXPECT_THROW(store.Sell(), std::logic_error);
 }
 
 
