@@ -1,27 +1,18 @@
-cmake_minimum_required(VERSION 3.10)
-
-enable_testing()
-
-
-find_package(GTest REQUIRED)
-
-include_directories(
-    ${CMAKE_SOURCE_DIR}/include
-)
-
 add_executable(BusinessMediatorTests
     test_EstateOwner.cpp
     test_GroceryStore.cpp
     test_Restaurant.cpp
+    test_BusinessMediator.cpp
+    MockBusinessMediator.h
 )
 
 target_link_libraries(BusinessMediatorTests
+    PRIVATE
     BusinessMediatorLib
-    GTest::gtest
-    GTest::gtest_main
-    GTest::gmock
-    GTest::gmock_main
-    ${CMAKE_THREAD_LIBS_INIT}
+    GTest::GTest
+    GMock::GMock
+    GTest::Main
 )
 
-add_test(NAME BusinessMediatorTests COMMAND BusinessMediatorTests)
+include(GoogleTest)
+gtest_discover_tests(BusinessMediatorTests)
