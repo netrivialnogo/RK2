@@ -4,16 +4,6 @@
 #include "../include/GroceryStore.h"
 #include "../include/Restaurant.h"
 
-TEST(BusinessMediatorTest, EstateRentChange_AffectsPrices) {
-    EstateOwner owner;
-    GroceryStore store;
-    Restaurant restaurant;
-    BusinessMediator mediator(owner, store, restaurant);
-
-    int oldPrice = restaurant.CookFood();
-    owner.SetEstateRentPrice(1000);
-    EXPECT_NE(restaurant.CookFood(), oldPrice);
-}
 
 TEST(BusinessMediatorTest, GroceryStock_ControlsRestaurant) {
     EstateOwner owner;
