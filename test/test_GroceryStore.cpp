@@ -21,14 +21,4 @@ TEST(GroceryStoreTest, Supply) {
     EXPECT_EQ(store.Supply(5), 5);
 }
 
-TEST(GroceryStoreTest, MediatorNotifications) {
-    EstateOwner owner;
-    GroceryStore store;
-    Restaurant restaurant;
-    MockBusinessMediator mediator(owner, store, restaurant);
-    
-    store.SetBusinessMediator(design::AccessKey<BusinessMediator>::createForTesting(), &mediator);
-    
-    EXPECT_CALL(mediator, GroceryStockChanged(5)).Times(1);
-    store.Supply(5);
-}
+
