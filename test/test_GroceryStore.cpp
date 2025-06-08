@@ -9,7 +9,7 @@ using ::testing::_;
 
 TEST(GroceryStoreTest, Supply_IncreasesStockAndNotifies) {
     GroceryStore store;
-    MockBusinessMediator mediator;
+    BusinessMediator mediator;
     store.SetBusinessMediator(design::AccessKey<BusinessMediator>::createForTesting(), &mediator);
 
     EXPECT_CALL(mediator, GroceryStockChanged(10)).Times(1);
@@ -21,7 +21,7 @@ TEST(GroceryStoreTest, Sell_DecreasesStockAndNotifies) {
     GroceryStore store;
     store.Supply(5);  
     
-    MockBusinessMediator mediator;
+    BusinessMediator mediator;
     store.SetBusinessMediator(design::AccessKey<BusinessMediator>::createForTesting(), &mediator);
 
     EXPECT_CALL(mediator, GroceryStockChanged(4)).Times(1);
