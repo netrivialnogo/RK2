@@ -6,11 +6,13 @@ add_executable(BusinessMediatorTests
     test_BusinessMediator.cpp
 )
 
+
 target_link_libraries(BusinessMediatorTests
     PRIVATE
     BusinessMediatorLib
     GTest::gtest
     GTest::gmock
+    GTest::gtest_main 
 )
 
 include(GoogleTest)
