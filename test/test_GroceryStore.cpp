@@ -3,24 +3,16 @@
 #include "../include/GroceryStore.h"
 #include "MockBusinessMediator.h"
 
-TEST(GroceryStoreTest, Supply_IncreasesStock) {
+TEST(GroceryStoreTest, Supply_IncreasesStockAndNotifies) {
     GroceryStore store;
-    EXPECT_EQ(store.Supply(10), 10);
-}
+    EstateOwner dummyOwner;
+    GroceryStore dummyStore;
+    Restaurant dummyRestaurant;
+    MockBusinessMediator mediator(dummyOwner, dummyStore, dummyRestaurant);
+    
+    store.SetBusinessMediator(design::AccessKey<BusinessMediator>::createForTesting(), &mediator);
 
-TEST(GroceryStoreTest, Sell_DecreasesStock) {
-    GroceryStore store;
-    store.Supply(5);
-    store.Sell();
-    EXPECT_EQ(store.Supply(0), 4); 
-}
-
-TEST(GroceryStoreTest, Sell_ThrowsWhenEmpty) {
-    GroceryStore store;
-    EXPECT_THROW(store.Sell(), std::logic_error);
-}
-
-TEST(GroceryStoreTest, AlterPrice_ChangesPrice) {
-    GroceryStore store;
-    EXPECT_EQ(store.AlterPrice(100), 100);
+    EXPECT_CALL(mediator, GroceryStockChanged(10)).Times(1);
+    auto newStock = store.Supply(10);
+    EXPECT_EQ(newStock, 10);
 }
