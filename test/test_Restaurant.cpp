@@ -17,5 +17,6 @@ TEST(RestaurantTest, CookFood_ReturnsNegativeWhenClosed) {
 
 TEST(RestaurantTest, AlterPrice_ChangesPrice) {
     Restaurant restaurant;
-    EXPECT_EQ(restaurant.AlterPrice(100), 100);
+    int oldPrice = restaurant.CookFood(); 
+    EXPECT_EQ(restaurant.AlterPrice(100), oldPrice + 100);
 }
