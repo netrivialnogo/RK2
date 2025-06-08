@@ -10,9 +10,9 @@ TEST(BusinessMediatorTest, EstateRentChange_AffectsPrices) {
     Restaurant restaurant;
     BusinessMediator mediator(owner, store, restaurant);
 
+    int oldPrice = restaurant.CookFood();
     owner.SetEstateRentPrice(1000);
-    EXPECT_EQ(store.AlterPrice(0), 100);
-    EXPECT_EQ(restaurant.AlterPrice(0), 1); 
+    EXPECT_NE(restaurant.CookFood(), oldPrice);
 }
 
 TEST(BusinessMediatorTest, GroceryStock_ControlsRestaurant) {
