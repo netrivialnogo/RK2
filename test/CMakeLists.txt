@@ -9,10 +9,9 @@ add_executable(BusinessMediatorTests
 target_link_libraries(BusinessMediatorTests
     PRIVATE
     BusinessMediatorLib
-    GTest::GTest
-    GTest::Main
+    GTest::gtest
+    GTest::gmock
 )
-
 
 include(GoogleTest)
 gtest_discover_tests(BusinessMediatorTests)
