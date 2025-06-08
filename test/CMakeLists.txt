@@ -1,3 +1,4 @@
+
 add_executable(BusinessMediatorTests
     test_EstateOwner.cpp
     test_GroceryStore.cpp
@@ -11,6 +12,7 @@ target_link_libraries(BusinessMediatorTests
     GTest::GTest
     GTest::Main
 )
+
 
 include(GoogleTest)
 gtest_discover_tests(BusinessMediatorTests)
