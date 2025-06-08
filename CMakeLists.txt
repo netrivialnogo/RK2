@@ -6,7 +6,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 find_package(GTest REQUIRED)
-find_package(GMock REQUIRED)  
 
 include_directories(include)
 
