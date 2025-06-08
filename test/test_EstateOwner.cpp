@@ -1,14 +1,15 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "../include/EstateOwner.h"
+#include "../include/GroceryStore.h" 
+#include "../include/Restaurant.h"    
 #include "MockBusinessMediator.h"
 
 TEST(EstateOwnerTest, SetEstateRentPrice_NotifiesMediator) {
     EstateOwner owner;
-    EstateOwner dummyOwner;
     GroceryStore dummyStore;
     Restaurant dummyRestaurant;
-    MockBusinessMediator mediator(dummyOwner, dummyStore, dummyRestaurant);
+    MockBusinessMediator mediator(owner, dummyStore, dummyRestaurant);
     
     owner.SetBusinessMediator(design::AccessKey<BusinessMediator>::createForTesting(), &mediator);
 
