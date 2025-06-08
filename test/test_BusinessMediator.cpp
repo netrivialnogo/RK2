@@ -21,9 +21,12 @@ TEST(BusinessMediatorTest, GroceryStock_ControlsRestaurant) {
     Restaurant restaurant;
     BusinessMediator mediator(owner, store, restaurant);
 
-    store.Supply(0);
+    while (store.Supply(0) > 0) {
+        store.Sell();
+    }
+    
     EXPECT_LT(restaurant.CookFood(), 0); 
 
-    store.Supply(1);
+    store.Supply(1); 
     EXPECT_GE(restaurant.CookFood(), 0); 
 }
