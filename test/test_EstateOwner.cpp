@@ -5,7 +5,11 @@
 
 TEST(EstateOwnerTest, SetEstateRentPrice_NotifiesMediator) {
     EstateOwner owner;
-    MockBusinessMediator mediator;
+    EstateOwner dummyOwner;
+    GroceryStore dummyStore;
+    Restaurant dummyRestaurant;
+    MockBusinessMediator mediator(dummyOwner, dummyStore, dummyRestaurant);
+    
     owner.SetBusinessMediator(design::AccessKey<BusinessMediator>::createForTesting(), &mediator);
 
     EXPECT_CALL(mediator, EstateRentPriceChanged(0, 1000)).Times(1);
