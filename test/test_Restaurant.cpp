@@ -7,16 +7,20 @@
 
 using ::testing::_;
 
-class MockBusinessMediator : public BusinessMediator {
-public:
-    MockBusinessMediator(EstateOwner& e, GroceryStore& g, Restaurant& r)
-        : BusinessMediator(e, g, r) {}
-    
-    MOCK_METHOD(void, FoodIsCooked, (), (override));
-};
+TEST(RestaurantTest, CookFood_NotifiesMediatorWhenOpen) {
+    Restaurant restaurant;
+    MockBusinessMediator mediator;
+    restaurant.SetBusinessMediator(design::AccessKey<BusinessMediator>::createForTesting(), &mediator);
+    restaurant.SetIsOpened(design::AccessKey<BusinessMediator>::createForTesting(), true);
 
-TEST(RestaurantTest, SetIsOpened) {
+    EXPECT_CALL(mediator, FoodIsCooked()).Times(1);
+    auto price = restaurant.CookFood();
+    EXPECT_GE(price, 0);
+}
+
+TEST(RestaurantTest, CookFood_ReturnsNegativeWhenClosed) {
     Restaurant restaurant;
     restaurant.SetIsOpened(design::AccessKey<BusinessMediator>::createForTesting(), false);
-    restaurant.SetIsOpened(design::AccessKey<BusinessMediator>::createForTesting(), true);
+    auto price = restaurant.CookFood();
+    EXPECT_LT(price, 0);
 }
