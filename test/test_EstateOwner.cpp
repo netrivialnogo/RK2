@@ -19,5 +19,6 @@ TEST(EstateOwnerTest, SetEstateRentPrice_NotifiesMediator) {
 
 TEST(EstateOwnerTest, SetEstateRentPrice_ReturnsOldPrice) {
     EstateOwner owner;
-    EXPECT_EQ(owner.SetEstateRentPrice(1000), 0);
+    owner.SetEstateRentPrice(10000);
+    EXPECT_EQ(owner.SetEstateRentPrice(1000), 10000);
 }
